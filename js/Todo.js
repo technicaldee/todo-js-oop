@@ -2,9 +2,9 @@
 
 class Todo {
   constructor(id, todoname, description, importance) {
-    this.id = id;
-    this.todoname = todoname;
-    this.description = description;
-    this.importance = importance;
+    this._id = id;
+    this._todoname = todoname;
+    this._description = description;
+    this._importance = importance;
   }
 }

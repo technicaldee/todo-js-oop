@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script src="js/main.js" defer></script>
-    <script src="js/Sort.js" defer></script>
-    <script src="js/Task.js" defer></script>
-    <script src="js/Todo.js" defer></script>
+
     <title>Tasks List</title>
+
+    <script src="js/main.js"></script>
+    <script src="js/Sort.js"></script>
+    <script src="js/Task.js"></script>
+    <script src="js/Todo.js"></script>
   </head>
 
   <!-- <header>Task List</header> -->
@@ -57,7 +59,10 @@
     </section>
 
     <section class="bordered">
-      <h1>Detail d'une tache</h1>
+      <div class="tab">
+        <h1>Detail d'une tache</h1>
+        <p><span class="chevron bottom" data-more></span></p>
+      </div>
 
       <div data-detail></div>
     </section>

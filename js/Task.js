@@ -1,65 +1,85 @@
-// display the todo in the DOM;
-class UI {
-  constructor(todoAr) {
+// display the todo in the DOM et al;
+class DisplayElements {
+  // the init method to set all default params
+  init(todoArr) {
     this.data = todoArr;
   }
 
-  //   accepts the lists DOM element and maps the todos to the DOM
+  // accepts the lists DOM element and maps the todos to the DOM
   displayData(lists) {
-    let displayData = this.data.map((item) => {
-      return `
+    lists.innerHTML = "";
+    this.data.forEach(function (item) {
+      let template = `
                 <p>
-                    <span>Tache: ${item.todoname} - Importance: ${item.importance}</span>
-                    <button class="detail" data-id = ${item.id}>Afficher le detail</button>
-                    <button class="remove" data-id = ${item.id}>Supprimer</button>
+                    <span>Tache: ${item._todoname} - Importance: ${item._importance}</span>
+                    <button class="detail" data-id = ${item._id}>Afficher le detail</button>
+                    <button class="remove" data-id = ${item._id}>Supprimer</button>
                 </p>
             `;
+      lists.insertAdjacentHTML("beforeend", template);
     });
-    lists.innerHTML = displayData.join(" ");
   }
 
-  //   A static method that clears input fields after a task is added. It accepts 3 DOM elements
-  static clearInput(todoname, description, importance) {
+  addData(todo) {
+    //   Pushing the Todo Into the Array
+    this.data.push(todo);
+  }
+
+  getTodo() {
+    // returns the most recent instance of the todo list
+    return this.data;
+  }
+
+  //   This method that clears input fields after a task is added. It accepts 3 DOM elements
+  clearInput(todoname, description, importance) {
     todoname.value = "";
     description.value = "";
-    for (var i = 0; i < importance.length; i++) importance[i].checked = false;
+    for (let i = 0; i < importance.length; i++) importance[i].checked = false;
   }
 
   //   This method adds an event listener to the todo. Whenever the remove button is clicked, it confirms it by checking the class name and then removes the todo from the array. Moreover, when the details button is clicked, it updates the details pane. I hope this isnt confusing.
-  removeTodo(lists, detail) {
-    lists.addEventListener("click", (e) => {
-      let btnId = e.target.dataset.id;
+  removeTodo(e, detail) {
+    let btnId = e.target.dataset.id;
 
-      if (e.target.classList.contains("remove")) {
-        e.target.parentElement.remove();
-        //remove from array.
-        this.removeArrayTodo(btnId);
-      } else {
-        let data = this.data.filter((item) => item.id === +btnId)[0];
-        if (data.description === "")
-          data.description = "No description available";
-        let displayData = `
-                <p>Tache: ${data.todoname}</p>
-                <p>Description: ${data.description}</p>
-                <p>importance: ${data.importance}</p>
-            `;
-        detail.innerHTML = displayData;
+    if (e.target.classList.contains("remove")) {
+      e.target.parentElement.remove();
+      //remove from array.
+      this.removeArrayTodo(btnId);
+    } else {
+      let desc = this.data.filter(function (item) {
+        return item._id === +btnId;
+      })[0];
+      if (desc._description === "") {
+        desc._description = "No description available";
       }
-    });
+      let displayData = `
+                <p>Tache: ${desc._todoname}</p>
+                <p>Description: ${desc._description}</p>
+                <p>importance: ${desc._importance}</p>
+            `;
+      detail.innerHTML = displayData;
+    }
   }
 
   //   Simply removes an id from an array
   removeArrayTodo(id) {
-    this.data = this.data.filter((item) => item.id !== +id);
+    this.data = this.data.filter(function (item) {
+      return item._id !== +id;
+    });
+    console.log(this.data);
   }
 
-  //   A static method checking for the presence of an error and then promptly changing the text colour via CSS
-  static checkError(todoname, name_text, importance, importance_text) {
-    todoname.value === ""
-      ? (name_text.style.color = "red")
-      : (name_text.style.color = "black");
-    importance.value === ""
-      ? (importance_text.style.color = "red")
-      : (importance_text.style.color = "black");
+  //   This method checking for the presence of an error and then promptly changing the text colour via CSS
+  checkError(todoname, name_text, importance, importance_text) {
+    if (todoname.value === "") {
+      name_text.style.color = "red";
+    } else {
+      name_text.style.color = "black";
+    }
+    if (importance.value === "") {
+      importance_text.style.color = "red";
+    } else {
+      importance_text.style.color = "black";
+    }
   }
 }

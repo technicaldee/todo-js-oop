@@ -7,8 +7,39 @@ input[type="text"] {
   border: 1.5px solid black;
   margin: 20px 0;
   padding: 20px;
+  overflow-y: hidden;
 }
 
 body {
   margin: 10px 40px;
+}
+
+.tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.shrink {
+  display: none;
+}
+
+.chevron::before {
+  border-style: solid;
+  border-width: 0.25em 0.25em 0 0;
+  content: "";
+  display: inline-block;
+  height: 0.45em;
+  left: 0.15em;
+  position: relative;
+  top: 0.15em;
+  transform: rotate(-45deg);
+  vertical-align: top;
+  width: 0.45em;
+}
+
+.chevron.bottom:before {
+  top: 0;
+  transform: rotate(135deg);
 }
